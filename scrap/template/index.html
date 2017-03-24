@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>微博数据</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-table.min.css">
+        <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-table.min.js"></script>
+    <script src="/js/locale/bootstrap-table-zh-CN.js"></script>
+        <script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="/js/locale/bootstrap-datetimepicker.de.js" charset="UTF-8"></script>
+
+
+</head>
+<body>
+<div id="app" class="container">
+    <div class="row">
+        <div class="col-md-3">开始时间<input type="text" value="2012-05-15 21:05" id="datetimepicker"></div>
+        <div class="col-md-3">结束时间<input type="text" value="2012-05-15 21:05" id="datetimepicker2"></div>
+        <div class="col-md-3">
+            <select class="form-control">
+                <option>全选</option>
+                <option>猫咪</option>
+                <option>哈士奇</option>
+                <option>金毛</option>
+            </select>
+        </div>
+        <div class="col-md-3"><div v-on:click=fetchweibo() class="btn btn-primary">搜索</div></div>
+    </div>
+    <div class="table-responsive ">
+      <table class="table table-bordered">
+          <tr><td>地址</td><td>标题</td><td>关键字</td></tr>
+          <tr v-for="(item,index) in weibos">
+              <td><a target="_blank" v-bind:href="item.url">${item.url}</a></td>
+              <td>${item.title}</td>
+              <td>${item.keyword}</td>
+          </tr>
+      </table>
+    </div>
+</div>
+</body>
+<script src="/js/vue.min.js"></script>
+<script src="/js/vue-resource.min.js"></script>
+<script>
+Vue.http.options.emulateJSON = true;
+var app = new Vue({
+                el:'#app',
+                delimiters: ['${', '}'],
+                data:{weibos:null},
+                mounted:function(){
+                    this.init();
+
+                },
+                methods:{
+                    init:function(){
+                            var date = new Date();
+                            Y = date.getFullYear() + '-';
+                            M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+                            D = date.getDate() + ' ';
+                            h = date.getHours() + ':';
+                            m = date.getMinutes() ;
+                            $("#datetimepicker").val(Y+M+D+h+m)
+                            $("#datetimepicker2").val(Y+M+D+h+m)
+                    },
+                    fetchweibo:function(){
+                        var timestr = $('#datetimepicker').val();
+                        var timestr2 = $('#datetimepicker2').val();
+                        var startTime = new Date(timestr.replace(/-/g, '/')).getTime()/1000;
+                        var endTime = new Date(timestr2.replace(/-/g, '/')).getTime()/1000;
+                        var  keyword = $('#app select').val();
+                        page = 0 ;
+                        debugger;
+                        this.$http.post('/fetchWeibo/',{'startTime':startTime,'endTime':endTime,'keyword':keyword}).then(response=>{
+                             var obj = response.body;
+                             if (obj.status == 0){
+                                console.log(obj.res);
+                                this.weibos = obj.res;
+                             }
+
+                        },response=>{
+                        });
+                    }
+                }
+            })
+
+$('#datetimepicker').datetimepicker({
+    format: 'yyyy-mm-dd hh:ii'
+});
+$('#datetimepicker2').datetimepicker({
+    format: 'yyyy-mm-dd hh:ii'
+});
+
+
+</script>
+</html>
