@@ -1,6 +1,6 @@
 #!/bin/bash
 NAME="weibo" # Name of the application
-DJANGODIR=/usr/share/imeili100/imeili100 # Django project directory
+DJANGODIR=/home/weibocat_dog/src/scrapweibo # Django project directory
 SOCKFILE=/tmp/imeili100_django/run/gunicorn.sock # we will communicte using this unix socket
 USER=root # the user to run as
 GROUP=webapps # the group to run as
@@ -12,7 +12,7 @@ echo "Starting $NAME as `whoami`"
 
 # Activate the virtual environment
 cd $DJANGODIR
-source ../env/bin/activate
+source /home/weibocat_dog/bin/activate
 export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
 export PYTHONPATH=$DJANGODIR:$PYTHONPATH
 
