@@ -1,12 +1,12 @@
 #!/bin/bash
 NAME="weibo" # Name of the application
 DJANGODIR=/home/weibocat_dog/src/scrapweibo # Django project directory
-SOCKFILE=/tmp/imeili100_django/run/gunicorn.sock # we will communicte using this unix socket
+SOCKFILE=/tmp/weibo_django/run/gunicorn.sock # we will communicte using this unix socket
 USER=root # the user to run as
 GROUP=webapps # the group to run as
 NUM_WORKERS=3 # how many worker processes should Gunicorn spawn
-DJANGO_SETTINGS_MODULE=imeili100.settings # which settings file should Django use
-DJANGO_WSGI_MODULE=imeili100.wsgi # WSGI module name
+DJANGO_SETTINGS_MODULE=weiboscrap.settings # which settings file should Django use
+DJANGO_WSGI_MODULE=weiboscrap.wsgi # WSGI module name
 
 echo "Starting $NAME as `whoami`"
 
