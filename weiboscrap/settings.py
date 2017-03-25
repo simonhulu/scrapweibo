@@ -25,7 +25,7 @@ SECRET_KEY = '#$s^!wcy=*$q99l1ld$milyak+qg+b+(2shva+x_^+oz)+9j!i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['weiboapp']
+ALLOWED_HOSTS = ['weiboapp','127.0.0.1','localhost']
 
 
 # Application definition

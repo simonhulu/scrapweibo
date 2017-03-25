@@ -12,8 +12,24 @@ from django.views.decorators.csrf import csrf_exempt
 import pymongo
 import json
 import bson.json_util
+from . import  scrapDogCatInWeibo
 def index(request):
     return render(request,'index.html')
+
+@csrf_exempt
+def scrapweibo(request):
+    s1 =  scrapDogCatInWeibo.searchDogAndCatInWeibo("猫咪")
+    s2 = scrapDogCatInWeibo.searchDogAndCatInWeibo("哈士奇")
+    s3 = scrapDogCatInWeibo.searchDogAndCatInWeibo("金毛")
+    s4 = scrapDogCatInWeibo.searchDogAndCatInWeibo("狗狗")
+    s1.initDriver()
+    s2.initDriver()
+    s3.initDriver()
+    s4.initDriver()
+    imeilires = Imeili100Result()
+    imeilires.status = Imeili100ResultStatus.ok.value
+
+    return HttpResponse(json.dumps(imeilires.__dict__, ensure_ascii=False))
 
 @csrf_exempt
 def fetchWeibo(request):

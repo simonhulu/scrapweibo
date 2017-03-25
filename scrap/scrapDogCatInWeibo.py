@@ -11,13 +11,15 @@ from pymongo import  MongoClient
 import pymongo
 class searchDogAndCatInWeibo:
 
+    def __init__(self,keyword):
+        self.keyword = keyword
 
     def initDriver(self):
         self.driver = None;
         client = MongoClient()
         db = client['weibo_dog_cat']
         self.collection = db.hotweibo
-        self.keyword = "猫咪"
+
         firefox_capabilities = DesiredCapabilities.CHROME
         firefox_capabilities['marionette'] = True
         self.driver = webdriver.PhantomJS(executable_path='/usr/local/bin/phantomjs')
