@@ -1,5 +1,5 @@
 #!/bin/bash
-NAME="imeili100app" # Name of the application
+NAME="weibo" # Name of the application
 DJANGODIR=/usr/share/imeili100/imeili100 # Django project directory
 SOCKFILE=/tmp/imeili100_django/run/gunicorn.sock # we will communicte using this unix socket
 USER=root # the user to run as
