@@ -20,6 +20,7 @@ def index(request):
 threadLock = threading.Lock()
 class scrapThread(threading.Thread):
     def __init__(self,keyword):
+        threading.Thread.__init__(self)
         self.keyword = keyword
     def run(self):
         threadLock.acquire()
