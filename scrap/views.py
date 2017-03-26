@@ -12,23 +12,33 @@ from django.views.decorators.csrf import csrf_exempt
 import pymongo
 import json
 import bson.json_util
+import threading
 from . import  scrapDogCatInWeibo
 def index(request):
     return render(request,'index.html')
 
+
+class scrapThread(threading.Thread):
+    def __init__(self,keyword):
+        self.keyword = keyword
+    def run(self):
+        s1 = scrapDogCatInWeibo.searchDogAndCatInWeibo(self.keyword)
+        s1.initDriver()
+
+
+
 @csrf_exempt
 def scrapweibo(request):
-    s1 =  scrapDogCatInWeibo.searchDogAndCatInWeibo("猫咪")
-    s2 = scrapDogCatInWeibo.searchDogAndCatInWeibo("哈士奇")
-    s3 = scrapDogCatInWeibo.searchDogAndCatInWeibo("金毛")
-    s4 = scrapDogCatInWeibo.searchDogAndCatInWeibo("狗狗")
-    s1.initDriver()
-    s2.initDriver()
-    s3.initDriver()
-    s4.initDriver()
+    t1 = scrapThread("猫咪")
+    t1.start()
+    t2 = scrapThread("哈士奇")
+    t2.start()
+    t3 = scrapThread("金毛")
+    t3.start()
+    t4 = scrapThread("狗狗")
+    t4.start()
     imeilires = Imeili100Result()
     imeilires.status = Imeili100ResultStatus.ok.value
-
     return HttpResponse(json.dumps(imeilires.__dict__, ensure_ascii=False))
 
 @csrf_exempt
