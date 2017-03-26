@@ -17,14 +17,15 @@ from . import  scrapDogCatInWeibo
 def index(request):
     return render(request,'index.html')
 
-
+threadLock = threading.Lock()
 class scrapThread(threading.Thread):
     def __init__(self,keyword):
         self.keyword = keyword
     def run(self):
+        threadLock.acquire()
         s1 = scrapDogCatInWeibo.searchDogAndCatInWeibo(self.keyword)
         s1.initDriver()
-
+        threadLock.release()
 
 
 @csrf_exempt
