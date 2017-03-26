@@ -38,8 +38,7 @@ class searchDogAndCatInWeibo:
 
 
         except Exception as e:
-            # print(e)
-            pass
+            raise  e
 
     def f(self):
         # do something here ...
@@ -50,18 +49,18 @@ class searchDogAndCatInWeibo:
                 tt =  element.find_element_by_class_name("map-feed-con")
                 tta = element.find_element_by_tag_name("a")
                 title = (tt.text)
-                print(title)
                 aa = element.find_element_by_class_name("map-feed-go")
                 url = (aa.get_attribute("href"))
                 if self.collection.find_one({'url':url}) == None :
                     try:
                         self.collection.insert_one({'url':url,'title':title,'timestamp':time.time(),'keyword':self.keyword})
                     except Exception as ae:
-                        print(ae)
+                        raise ae
                     pass
 
         except Exception as e:
-            print(e)
+            raise e
+
 
         threading.Timer(6, self.f).start()
 
@@ -70,7 +69,7 @@ class searchDogAndCatInWeibo:
         try:
             wait.until(expected_conditions.visibility_of_element_located(By.XPATH,"//a[@href='http://data.weibo.com/index/realtime']"))
         except Exception as e:
-            print(e)
+            raise e
         finally:
             link = self.driver.find_element_by_xpath("//a[@href='http://data.weibo.com/index/realtime']");
             link.click()
@@ -81,7 +80,7 @@ class searchDogAndCatInWeibo:
             wait.until(expected_conditions.visibility_of_element_located((By.XPATH, "//*[@node-type='searchCon']")))
 
         except Exception as e:
-            print(e)
+            raise e
         finally:
             searchCon = self.driver.find_element_by_xpath("//*[@node-type='searchCon']")
             searchInput = searchCon.find_element_by_tag_name("input")
@@ -92,14 +91,13 @@ class searchDogAndCatInWeibo:
             searchbtn.click()
     def login(self):
         loginBtn = self.driver.find_element_by_xpath("//*[@node-type='loginBtn']")
-        print(loginBtn)
         loginBtn.click()
         wait = WebDriverWait(self.driver, 10)
         try:
             wait.until(expected_conditions.visibility_of_element_located((By.NAME,'username')))
 
         except Exception as e:
-            print(e)
+            raise  e
         finally:
             accountInput = self.driver.find_element_by_name("username")
             passwdInput = self.driver.find_element_by_name("password")
