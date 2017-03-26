@@ -97,7 +97,7 @@ class searchDogAndCatInWeibo:
             wait.until(expected_conditions.visibility_of_element_located((By.NAME,'username')))
 
         except Exception as e:
-            raise  e
+            pass
         finally:
             accountInput = self.driver.find_element_by_name("username")
             passwdInput = self.driver.find_element_by_name("password")
