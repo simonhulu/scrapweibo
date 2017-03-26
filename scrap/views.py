@@ -30,8 +30,10 @@ class scrapThread(threading.Thread):
 
 @csrf_exempt
 def scrapweibo(request):
-    t1 = scrapThread("猫咪")
-    t1.start()
+    s1 = scrapDogCatInWeibo.searchDogAndCatInWeibo("猫咪")
+    s1.initDriver()
+    # t1 = scrapThread("猫咪")
+    # t1.start()
     # t2 = scrapThread("哈士奇")
     # t2.start()
     # t3 = scrapThread("金毛")
