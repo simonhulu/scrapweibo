@@ -38,7 +38,7 @@ class searchDogAndCatInWeibo:
 
 
         except Exception as e:
-            raise  e
+            pass
 
     def f(self):
         # do something here ...
