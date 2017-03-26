@@ -38,7 +38,7 @@ class searchDogAndCatInWeibo:
 
 
         except Exception as e:
-            print(e)
+            # print(e)
             pass
 
     def f(self):
