@@ -31,12 +31,12 @@ class scrapThread(threading.Thread):
 def scrapweibo(request):
     t1 = scrapThread("猫咪")
     t1.start()
-    t2 = scrapThread("哈士奇")
-    t2.start()
-    t3 = scrapThread("金毛")
-    t3.start()
-    t4 = scrapThread("狗狗")
-    t4.start()
+    # t2 = scrapThread("哈士奇")
+    # t2.start()
+    # t3 = scrapThread("金毛")
+    # t3.start()
+    # t4 = scrapThread("狗狗")
+    # t4.start()
     imeilires = Imeili100Result()
     imeilires.status = Imeili100ResultStatus.ok.value
     return HttpResponse(json.dumps(imeilires.__dict__, ensure_ascii=False))
