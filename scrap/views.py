@@ -47,21 +47,22 @@ def scrapweibo(request):
 
 @csrf_exempt
 def fetchWeibo(request):
-    page = 0
-    startTime = time.time()
-    endTime = time.time()
-    if request.method == 'GET':
-        page = request.GET.get('page', 0)
-        startTime = request.GET.get('startTime', time.time())
-        endTime = request.GET.get('endTime', time.time())
-    elif request.method == 'POST':
-        page = request.POST.get('page', 0)
-        startTime = request.POST.get('startTime', time.time())
-        endTime = request.POST.get('endTime', time.time())
-    collection = weibodata.db['hotweibo']
-    weibos = list(collection.find({'timestamp':{"$gte":int(float(startTime)),"$lte":int(float(endTime))}}))
-    jsonlist = bson.json_util.dumps(weibos)
-    imeilires = Imeili100Result()
-    imeilires.status = Imeili100ResultStatus.ok.value
-    imeilires.res = json.loads(jsonlist)
-    return HttpResponse(json.dumps(imeilires.__dict__,ensure_ascii=False))
+    # page = 0
+    # startTime = time.time()
+    # endTime = time.time()
+    # if request.method == 'GET':
+    #     page = request.GET.get('page', 0)
+    #     startTime = request.GET.get('startTime', time.time())
+    #     endTime = request.GET.get('endTime', time.time())
+    # elif request.method == 'POST':
+    #     page = request.POST.get('page', 0)
+    #     startTime = request.POST.get('startTime', time.time())
+    #     endTime = request.POST.get('endTime', time.time())
+    # collection = weibodata.db['hotweibo']
+    # weibos = list(collection.find({'timestamp':{"$gte":int(float(startTime)),"$lte":int(float(endTime))}}))
+    # jsonlist = bson.json_util.dumps(weibos)
+    # imeilires = Imeili100Result()
+    # imeilires.status = Imeili100ResultStatus.ok.value
+    # imeilires.res = json.loads(jsonlist)
+    # return HttpResponse(json.dumps(imeilires.__dict__,ensure_ascii=False))
+    return 1
