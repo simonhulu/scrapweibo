@@ -59,7 +59,6 @@ def fetchWeibo(request):
         startTime = request.POST.get('startTime', time.time())
         endTime = request.POST.get('endTime', time.time())
     collection = weibodata.db['hotweibo']
-    print(type(startTime))
     weibos = list(collection.find({'timestamp':{"$gte":int(float(startTime)),"$lte":int(float(endTime))}}))
     jsonlist = bson.json_util.dumps(weibos)
     imeilires = Imeili100Result()
