@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>城市</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-table.min.css">
+        <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-table.min.js"></script>
+    <script src="/js/locale/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="/js/locale/bootstrap-datetimepicker.de.js" charset="UTF-8"></script>
+
+    <style>
+
+       .proviceli li {
+
+ text-align: center;
+ float: left;
+ <!--width: 70px;-->
+ margin: 3px;
+ padding: 3px;
+ list-style-type: none;
+}
+
+.proviceliselected{
+ background-color: #CCCCCC;
+}
+.cities{
+ background-color:#f2f1f0;
+}
+
+.areas{
+ background-color:#f2f1f0;
+}
+.cityclick a{
+color: #de3438;
+}
+.ccrow{
+margin-top:16px;
+}
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <div class="row .ccrow">
+         <ul class="proviceli">
+            {% for provice in provinces %}
+             <li  ><a href="#"  v-on:click="provinceClick({{provice.adcode}},$event)" >{{ provice.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="row cities ccrow">
+        <ul class="proviceli ">
+
+
+             <li v-for="(item, index) in cities" v-on:click="cityClick(item.citycode,$event)"><a href="#">${ item.name }</a></li>
+
+        </ul>
+    </div>
+    <div class="row areas ccrow">
+        <ul class="proviceli ">
+
+             <li v-for="(item, index) in areas" v-on:click="areaClick(item.adcode,$event)"><a href="#">${ item.name }</a></li>
+
+        </ul>
+    </div>
+    <div class="row">
+
+    </div>
+</div>
+</body>
+<script src="/js/vue.js"></script>
+<script src="/js/vue-resource.min.js"></script>
+<script>
+Vue.http.options.emulateJSON = true;
+    var app = new Vue({
+                    el:'#app',
+                    delimiters: ['${', '}'],
+                    data:{weibos:null,cities:null,provinceode:0,areas:null},
+                    methods:{
+                        provinceClick:function(adcode,event){
+                            console.log(event.target)
+                            $('.proviceliselected').removeClass()
+                            $(event.target).addClass("proviceliselected")
+                            this.provinceode = adcode
+                            this.$http.get('/getcitiesinprovince?adcode='+adcode).then(response=>{
+                                 var obj = response.body;
+                                 if (obj.status == 0){
+                                    this.cities = obj.res
+
+                                 }
+
+                            },response=>{
+                            });
+                        },
+                        cityClick:function(code,event){
+                            citycode = code+''
+                            $(".cities li").removeClass("cityclick");
+                            $(event.target).parent().addClass("cityclick");
+                            this.$http.get('/getareainCity?citycode='+citycode).then(response=>{
+                                 var obj = response.body;
+                                 if (obj.status == 0){
+                                    console.log(obj.res)
+                                    this.areas = obj.res;
+                                 }
+
+                            },response=>{
+                            });
+                        },
+                        areaClick:function(code,event){
+                            adcode = code ;
+                            $(".areas li").removeClass("cityclick");
+                            $(event.target).parent().addClass("cityclick");
+
+                        }
+                    }
+                })
+    app.$mount();
+</script>
+</html>
