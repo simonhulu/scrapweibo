@@ -27,7 +27,7 @@ collection = db.pethos_citycode
 pethos_hospital = db.pethos_hospital
 def readexcel():
     data = xlrd.open_workbook("/Users/zhangshijie/Downloads/AMap_API_Table/citys.xlsx")
-    table = data.sheet_by_index(1)  # 通过索引顺序获取
+    table = data.sheet_by_index(1)
     nrows = table.nrows
     ncols = table.ncols
 
